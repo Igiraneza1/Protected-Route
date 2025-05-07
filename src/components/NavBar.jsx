@@ -1,16 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
-export default function Navbar() {
+function Navbar() {
+  const { isLoggedIn, logout } = useAuth();
+  
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
-    <nav className="bg-purple-600 w-full p-5 shadow-lg">
-      <div className="flex justify-start space-x-12 px-6">
-        <Link to="/" className="text-white hover:text-white font-semibold text-lg">Home</Link>
-        <Link to="/about" className="text-white hover:text-white font-semibold text-lg">About</Link>
-        <Link to="/user/1" className="text-white hover:text-white font-semibold text-lg">User 1</Link>
-        <Link to="/user/2" className="text-white hover:text-white font-semibold text-lg">User 2</Link>
-        <Link to="/user/3" className="text-white hover:text-white font-semibold text-lg">User 3</Link>
+    <nav className="bg-indigo-800 text-white shadow-md">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="font-bold text-xl">Protected React App</div>
+          <div className="space-x-6">
+            <Link 
+              to="/" 
+              className="hover:text-indigo-200 transition duration-300"
+            >
+              Home
+            </Link>
+            
+            {!isLoggedIn && (
+              <Link 
+                to="/login" 
+                className="hover:text-indigo-200 transition duration-300"
+              >
+                Login
+              </Link>
+            )}
+            
+            <Link 
+              to="/dashboard" 
+              className="hover:text-indigo-200 transition duration-300"
+            >
+              Dashboard
+            </Link>
+            
+            {isLoggedIn && (
+              <button 
+                onClick={handleLogout}
+                className="hover:text-indigo-200 transition duration-300 cursor-pointer"
+              >
+                Logout
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
 }
+
+export default Navbar;

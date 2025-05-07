@@ -1,27 +1,36 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/NavBar";
+import { AuthProvider } from "./components/AuthContext";
 import Home from "./components/Home";
-import About from "./components/About";
-import UserProfile from "./components/UserProfile";
-import './App.css'
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/NavBar";
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-purple-50">
-        <Navbar />
-        <main className="w-full flex justify-center mt-10">
-          <div className="w-full">
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <div className="container mx-auto px-4 py-8">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/user/:id" element={<UserProfile />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
-        </main>
-      </div>
-    </BrowserRouter>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
