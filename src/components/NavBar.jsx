@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 function Navbar() {
-  const { isLoggedIn, logout } = useAuth();
-  
-  const handleLogout = () => {
-    logout();
-  };
+  const { isLoggedIn} = useAuth();
+
 
   return (
     <nav className="bg-green-900 text-white rounded-xl">
